@@ -8,45 +8,45 @@ mycursor = conn.cursor()
 class Employees:
     def __init__(self, window):
         self.window = window
-        self.left = Frame(window, width = 2000, height = 1200, bg = "antique white")
+        self.left = Frame(window, width = 2000, height = 1200, bg = "snow2")
         self.left.pack(side = LEFT)
 
-        self.right = Frame(window, width = 10, height = 1200, bg = "antique white")
+        self.right = Frame(window, width = 10, height = 1200, bg = "snow2")
         self.right.pack(side = RIGHT)
 
-        self.heading = Label(self.left, text ="Grocery Store Management",
-                             font=('arial 40 bold'), fg = 'black',
-                             bg = "antique white")
-        self.heading.place(x = 0, y = 0)
+        self.heading = Label(self.left, text ="Store Employees Information",
+                             font=('arial 30 bold'), fg = 'HotPink4',
+                             bg = "snow2")
+        self.heading.place(x = 300, y = 0)
 
         self.heading = Label(self.left, text ="Employee First Name",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "antique white")
+                             bg = "snow2")
         self.heading.place(x = 0, y = 100)
 
         self.heading = Label(self.left, text ="Employee Last Name",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "antique white")
+                             bg = "snow2")
         self.heading.place(x = 0, y = 140)
 
         self.heading = Label(self.left, text ="Location ID",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "antique white")
+                             bg = "snow2")
         self.heading.place(x = 0, y = 180)
 
         self.heading = Label(self.left, text ="Email",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "antique white")
+                             bg = "snow2")
         self.heading.place(x = 0, y = 220)
 
         self.heading = Label(self.left, text ="Mobile",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "antique white")
+                             bg = "snow2")
         self.heading.place(x = 0, y = 260)
 
-        self.heading = Label(self.left, text ="Employee ID",font=('arial 10 bold'), fg = 'black',bg = "antique white")
+        self.heading = Label(self.left, text ="Employee ID",font=('arial 10 bold'), fg = 'black',bg = "snow2")
         self.heading.place(x = 0, y = 300)
-        self.heading = Label(self.left, text ="Designation ID",font=('arial 10 bold'), fg = 'black',bg = "antique white")
+        self.heading = Label(self.left, text ="Designation ID",font=('arial 10 bold'), fg = 'black',bg = "snow2")
         self.heading.place(x = 0, y = 340)
 
         # Entries for all Labels
@@ -99,6 +99,7 @@ class Employees:
             values = (self.val3, self.val4, self.val5, self.val1, self.val2, self.val6, self.val7)
             mycursor.execute(query, values)
             conn.commit()
+            self.clear2()
             tkinter.messagebox.showinfo("Success", "Successfully added", parent = self.left)
     def searchEmployee(self):
         """This function opens a new window, when the user clicks on the search button in the main window. It provides other options like edit as well."""
@@ -245,6 +246,7 @@ class Employees:
         inputs = (LOC, Email1, Mob, FN, LN, dsgn, eid)
         mycursor.execute(update_query, inputs)
         conn.commit()
+        self.clear()
         tkinter.messagebox.showinfo("Success", "Successfully Updated", parent = self.search_employees)
 
     def deleteNow(self):
@@ -255,6 +257,7 @@ class Employees:
             print("delete")
             mycursor.execute("DELETE FROM employees WHERE E_id=" + eid )
             conn.commit()
+            self.clear()
             tkinter.messagebox.showinfo("Success", "Successfully Deleted", parent = self.search_employees)
 
     def clear(self):

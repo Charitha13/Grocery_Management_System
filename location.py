@@ -9,27 +9,26 @@ mycursor = conn.cursor()
 class Location():
     def __init__(self, window):
         self.window = window
-        self.left = Frame(window, width=2000, height=1600, bg="antique white")
+        self.left = Frame(window, width=2000, height=1600, bg="snow2")
         self.left.pack(side = LEFT)
 
-        self.right = Frame(window, width = 10, height = 1600, bg = "antique white")
+        self.right = Frame(window, width = 10, height = 1600, bg = "snow2")
         self.right.pack(side = RIGHT)
 
-        self.heading = Label(self.left, text ="Grocery Store Management", font=('arial 40 bold'), fg = 'black', bg = "antique white")
-        self.heading.place(x = 0, y = 0)
+        self.heading = Label(self.left, text ="Store Location Information", font=('arial 30 bold'), fg = 'HotPink4', bg = "snow2")
+        self.heading.place(x = 200, y = 0)
 
-        self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "antique white")
+        self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "snow2")
         self.heading.place(x = 0, y = 100)
 
-        self.heading = Label(self.left, text ="Zipcode", font=('arial 10 bold'), fg = 'black', bg = "antique white")
+        self.heading = Label(self.left, text ="Zipcode", font=('arial 10 bold'), fg = 'black', bg = "snow2")
         self.heading.place(x = 0, y = 140)
 
-        self.heading = Label(self.left, text ="City", font=('arial 10 bold'), fg = 'black', bg = "antique white")
+        self.heading = Label(self.left, text ="City", font=('arial 10 bold'), fg = 'black', bg = "snow2")
         self.heading.place(x = 0, y = 180)
 
-        self.heading = Label(self.left, text ="Street", font=('arial 10 bold'), fg = 'black', bg = "antique white")
+        self.heading = Label(self.left, text ="Street", font=('arial 10 bold'), fg = 'black', bg = "snow2")
         self.heading.place(x = 0, y = 220)
-
 
         # Entries for all Labels
         self.location_id = Entry(self.left, width = 30)
@@ -57,7 +56,7 @@ class Location():
 
     # Function to call when add location is clicked
     def add_location(self):
-        """This function is used add employees into the Location table of our Grocery Store Management system"""
+        """This function is used add new location into the Location table of our Grocery Store Management system"""
         self.val1 = self.location_id.get()
         self.val2 = self.zipcode.get()
         self.val3 = self.city.get()
@@ -70,6 +69,7 @@ class Location():
             values = (self.val1, self.val2, self.val3, self.val4)
             mycursor.execute(query_loc, values)
             conn.commit()
+            self.clear2()
             tkinter.messagebox.showinfo("Success", "Successfully added", parent = self.left)
     def searchLocation(self):
         """This function opens a new window, when the user clicks on the search button in the main window. It provides other options like edit as well."""
@@ -190,6 +190,7 @@ class Location():
         inputs = (zip, city, street,loc)
         mycursor.execute(update_query, inputs)
         conn.commit()
+        self.clear()
         tkinter.messagebox.showinfo("Success", "Successfully Updated", parent = self.search_location)
 
     def deleteNow(self):
@@ -201,6 +202,7 @@ class Location():
             if my_var: # True if yes button is clicked
                 mycursor.execute("DELETE FROM location WHERE Location_Id= " + "\"" + loc_id + "\"" )
                 conn.commit()
+                self.clear()
                 tkinter.messagebox.showinfo("Success", "Successfully Deleted", parent = self.search_location)
         except:
             tkinter.messagebox.showinfo("Warning", "Employees are still working in this location", parent = self.search_location)
