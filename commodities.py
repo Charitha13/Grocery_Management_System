@@ -21,10 +21,10 @@ class Commodities():
         self.back_img1 = ImageTk.PhotoImage(self.back_img)
         self.background_label = Label(self.left, image=self.back_img1, compound = "right", bg = "white", fg = None)
         self.background_label.pack(side = "top", fill ="both")
-        self.background_label.place(x=250, y=0, relwidth = 1, relheight = 1)
+        self.background_label.place(x=250, y=-100, relwidth = 1, relheight = 1)
 
-        self.heading = Label(self.left, text ="Store Commodities Information", font=('arial 30 bold'), fg = 'HotPink4', bg = "white")
-        self.heading.place(x = 200, y = -100)
+        self.heading = Label(self.left, text ="Commodities Information", font=('arial 30 bold'), fg = 'HotPink4', bg = "white")
+        self.heading.place(x = 200, y = 0)
 
         self.heading = Label(self.left, text ="Product_No", font=('arial 10 bold'), fg = 'black',bg = "white")
         self.heading.place(x = 0, y = 100)

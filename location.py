@@ -23,7 +23,7 @@ class Location():
         self.background_label.pack(side = "top", fill ="both")
         self.background_label.place(x=250, y=-40, relwidth = 1, relheight = 1)
 
-        self.heading = Label(self.left, text ="Store Location Information", font=('arial 30 bold'), fg = 'HotPink4', bg = "snow2")
+        self.heading = Label(self.left, text ="Store Location Information", font=('arial 30 bold'), fg = 'HotPink4', bg = "white")
         self.heading.place(x = 200, y = 0)
 
         self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "white")
