@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import mysql.connector
 import tkinter.messagebox
+from PIL import ImageTk, Image
 
 
 conn = mysql.connector.connect(host="localhost", user="root", password="root", database="grocerystore")
@@ -9,50 +10,57 @@ mycursor = conn.cursor()
 class Customers():
     def __init__(self, window):
         self.window = window
-        self.left = Frame(window, width=2000, height=1600, bg="snow2")
+        self.left = Frame(window, width=2000, height=1600, bg="white")
         self.left.pack(side = LEFT)
 
-        self.right = Frame(window, width = 10, height = 1600, bg = "snow2")
+        self.right = Frame(window, width = 10, height = 1600, bg = "white")
         self.right.pack(side = RIGHT)
 
-        self.heading = Label(self.left, text ="Customer Details", font=('arial 30 bold'), fg = 'HotPink4', bg = "snow2")
+        self.back_img = Image.open('customers_in1.png')
+        # self.back_img = self.back_img.resize((1000, 1000), Image.ANTIALIAS)
+        self.back_img1 = ImageTk.PhotoImage(self.back_img)
+        self.background_label = Label(self.left, image=self.back_img1, compound = "right", bg = "white", fg = None)
+        self.background_label.pack(side = "top", fill ="both")
+        self.background_label.place(x=0, y=40, relwidth = 1, relheight = 1)
+
+        self.heading = Label(self.left, text ="Customer Details", font=('arial 30 bold'), fg = 'HotPink4', bg = "white")
         self.heading.place(x = 200, y = 0)
 
-        self.heading = Label(self.left, text ="Customer ID", font=('arial 10 bold'), fg = 'black',bg = "snow2")
+        self.heading = Label(self.left, text ="Customer ID", font=('arial 10 bold'), fg = 'black',bg = "white")
         self.heading.place(x = 0, y = 100)
 
-        self.heading = Label(self.left, text ="First Name", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="First Name", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 140)
 
-        self.heading = Label(self.left, text ="Last Name", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="Last Name", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 180)
 
-        self.heading = Label(self.left, text ="Mobile", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="Mobile", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 220)
 
-        self.heading = Label(self.left, text ="Email", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="Email", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 260)
 
-        self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "snow2")
+        self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "white")
         self.heading.place(x = 0, y = 300)
 
         # Entries for all Labels
-        self.cust_id = Entry(self.left, width = 30)
+        self.cust_id = Entry(self.left, width = 30, bg = "ghost white")
         self.cust_id.place(x = 210, y = 100)
 
-        self.FN = Entry(self.left, width = 30)
+        self.FN = Entry(self.left, width = 30, bg = "ghost white")
         self.FN.place(x = 210, y = 140)
 
-        self.LN = Entry(self.left, width = 30)
+        self.LN = Entry(self.left, width = 30, bg = "ghost white")
         self.LN.place(x = 210, y = 180)
 
-        self.phone = Entry(self.left, width = 30)
+        self.phone = Entry(self.left, width = 30, bg = "ghost white")
         self.phone.place(x = 210, y = 220)
 
-        self.email = Entry(self.left, width = 30)
+        self.email = Entry(self.left, width = 30, bg = "ghost white")
         self.email.place(x = 210, y = 260)
 
-        self.loc_id = Entry(self.left, width = 30)
+        self.loc_id = Entry(self.left, width = 30, bg = "ghost white")
         self.loc_id.place(x = 210, y = 300)
 
         # Submit Button

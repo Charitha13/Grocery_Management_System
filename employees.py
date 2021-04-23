@@ -2,73 +2,81 @@ from tkinter import *
 from tkinter import ttk
 import mysql.connector
 import tkinter.messagebox
+from PIL import ImageTk, Image
 
 conn = mysql.connector.connect(host = "localhost", user = "root", password = "root", database = "grocerystore")
 mycursor = conn.cursor()
 class Employees:
     def __init__(self, window):
         self.window = window
-        self.left = Frame(window, width = 2000, height = 1200, bg = "snow2")
+        self.left = Frame(window, width = 2000, height = 1200, bg = "white")
         self.left.pack(side = LEFT)
 
-        self.right = Frame(window, width = 10, height = 1200, bg = "snow2")
+        self.right = Frame(window, width = 10, height = 1200, bg = "white")
         self.right.pack(side = RIGHT)
 
+        self.back_img = Image.open('employees_in1.png')
+        # self.back_img = self.back_img.resize((810, 429), Image.ANTIALIAS)
+        self.back_img1 = ImageTk.PhotoImage(self.back_img)
+        self.background_label = Label(self.left, image=self.back_img1, compound = "right", bg = "white", fg = None)
+        self.background_label.pack(side = "top", fill ="both")
+        self.background_label.place(x=250, y=-50, relwidth = 1, relheight = 1)
+
         self.heading = Label(self.left, text ="Store Employees Information",
-                             font=('arial 30 bold'), fg = 'HotPink4',
-                             bg = "snow2")
+                             font=('arial 35 bold italic'), fg = 'HotPink4',
+                             bg = "white")
         self.heading.place(x = 300, y = 0)
 
         self.heading = Label(self.left, text ="Employee First Name",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "snow2")
+                             bg = "white")
         self.heading.place(x = 0, y = 100)
 
         self.heading = Label(self.left, text ="Employee Last Name",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "snow2")
+                             bg = "white")
         self.heading.place(x = 0, y = 140)
 
         self.heading = Label(self.left, text ="Location ID",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "snow2")
+                             bg = "white")
         self.heading.place(x = 0, y = 180)
 
         self.heading = Label(self.left, text ="Email",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "snow2")
+                             bg = "white")
         self.heading.place(x = 0, y = 220)
 
         self.heading = Label(self.left, text ="Mobile",
                              font=('arial 10 bold'), fg = 'black',
-                             bg = "snow2")
+                             bg = "white")
         self.heading.place(x = 0, y = 260)
 
-        self.heading = Label(self.left, text ="Employee ID",font=('arial 10 bold'), fg = 'black',bg = "snow2")
+        self.heading = Label(self.left, text ="Employee ID",font=('arial 10 bold'), fg = 'black',bg = "white")
         self.heading.place(x = 0, y = 300)
-        self.heading = Label(self.left, text ="Designation ID",font=('arial 10 bold'), fg = 'black',bg = "snow2")
+        self.heading = Label(self.left, text ="Designation ID",font=('arial 10 bold'), fg = 'black',bg = "white")
         self.heading.place(x = 0, y = 340)
 
         # Entries for all Labels
-        self.first_name = Entry(self.left, width = 30)
+        self.first_name = Entry(self.left, width = 30,bg = "ghost white")
         self.first_name.place(x = 210, y = 100)
 
-        self.last_name = Entry(self.left, width = 30)
+        self.last_name = Entry(self.left, width = 30, bg = "ghost white")
         self.last_name.place(x = 210, y = 140)
 
-        self.loc_id = Entry(self.left, width = 30)
+        self.loc_id = Entry(self.left, width = 30, bg = "ghost white")
         self.loc_id.place(x = 210, y = 180)
 
-        self.email = Entry(self.left, width = 30)
+        self.email = Entry(self.left, width = 30, bg = "ghost white")
         self.email.place(x = 210, y = 220)
 
-        self.mobile = Entry(self.left, width = 30)
+        self.mobile = Entry(self.left, width = 30, bg = "ghost white")
         self.mobile.place(x = 210, y = 260)
 
-        self.e_id = Entry(self.left, width = 30)
+        self.e_id = Entry(self.left, width = 30, bg = "ghost white")
         self.e_id.place(x = 210, y = 300)
 
-        self.dsgn_id = Entry(self.left, width = 30)
+        self.dsgn_id = Entry(self.left, width = 30, bg = "ghost white")
         self.dsgn_id.place(x = 210, y = 340)
 
         # Submit Button
@@ -145,7 +153,7 @@ class Employees:
         mycursor.execute(sql_query, name)
         searchResult = mycursor.fetchall()
         #searchResult.sort(key=lambda e: e[1], reverse=True)
-        cols = ('Serial No', 'Location_Id', 'Email', 'Mobile', 'Last Name', 'first Name', 'E_Id', 'Dsgn_Id')
+        cols = ('Serial No', 'Location_Id', 'Email', 'Mobile', 'First Name', 'Last Name', 'E_Id', 'Dsgn_Id')
         self.listBox = ttk.Treeview(self.search_employees, columns=cols, show = 'headings' )
         # set column headings
         for col in cols:
@@ -154,8 +162,8 @@ class Employees:
             self.listBox.insert("", "end", values=(i, location, Email, Mobile, LName, FName, EID, DsID))
         self.listBox.place(x = 0, y = 200)
         if searchResult:
-            child_id = self.listBox.get_children()[-1]
-            val1 = self.listBox.focus(child_id)
+            #child_id = self.listBox.get_children()[-1]
+            #val1 = self.listBox.focus(child_id)
             id = self.listBox.focus()
             self.id_item = self.listBox.item(id)
         self.listBox.bind("<<TreeviewSelect>>", self.onSelect)
@@ -231,7 +239,6 @@ class Employees:
         """This function is used to get the selected item from the displayed list"""
         for item in self.listBox.selection():
             self.item_text = self.listBox.item(item,"values")
-        print(self.item_text)
 
     def updateNow(self):
         """Used to update the Employees table"""
@@ -254,7 +261,7 @@ class Employees:
         eid = self.e_id2.get()
         my_var=tkinter.messagebox.askyesnocancel("Delete ?","Delete id:"+str(eid),icon='warning',default='no', parent = self.search_employees)
         if my_var: # True if, yes button is clicked
-            print("delete")
+            #print("delete")
             mycursor.execute("DELETE FROM employees WHERE E_id=" + eid )
             conn.commit()
             self.clear()

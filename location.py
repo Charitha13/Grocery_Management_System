@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import mysql.connector
 import tkinter.messagebox
+from PIL import ImageTk, Image
 
 
 conn = mysql.connector.connect(host="localhost", user="root", password="root", database="grocerystore")
@@ -9,38 +10,45 @@ mycursor = conn.cursor()
 class Location():
     def __init__(self, window):
         self.window = window
-        self.left = Frame(window, width=2000, height=1600, bg="snow2")
+        self.left = Frame(window, width=2000, height=1600, bg="white")
         self.left.pack(side = LEFT)
 
-        self.right = Frame(window, width = 10, height = 1600, bg = "snow2")
+        self.right = Frame(window, width = 10, height = 1600, bg = "white")
         self.right.pack(side = RIGHT)
+
+        self.back_img = Image.open('locations_in1.png')
+        self.back_img = self.back_img.resize((640, 500), Image.ANTIALIAS)
+        self.back_img1 = ImageTk.PhotoImage(self.back_img)
+        self.background_label = Label(self.left, image=self.back_img1, compound = "right", bg = "white", fg = None)
+        self.background_label.pack(side = "top", fill ="both")
+        self.background_label.place(x=250, y=-40, relwidth = 1, relheight = 1)
 
         self.heading = Label(self.left, text ="Store Location Information", font=('arial 30 bold'), fg = 'HotPink4', bg = "snow2")
         self.heading.place(x = 200, y = 0)
 
-        self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "snow2")
+        self.heading = Label(self.left, text ="Location ID", font=('arial 10 bold'), fg = 'black',bg = "white")
         self.heading.place(x = 0, y = 100)
 
-        self.heading = Label(self.left, text ="Zipcode", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="Zipcode", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 140)
 
-        self.heading = Label(self.left, text ="City", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="City", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 180)
 
-        self.heading = Label(self.left, text ="Street", font=('arial 10 bold'), fg = 'black', bg = "snow2")
+        self.heading = Label(self.left, text ="Street", font=('arial 10 bold'), fg = 'black', bg = "white")
         self.heading.place(x = 0, y = 220)
 
         # Entries for all Labels
-        self.location_id = Entry(self.left, width = 30)
+        self.location_id = Entry(self.left, width = 30, bg = "ghost white")
         self.location_id.place(x = 210, y = 100)
 
-        self.zipcode = Entry(self.left, width = 30)
+        self.zipcode = Entry(self.left, width = 30, bg = "ghost white")
         self.zipcode.place(x = 210, y = 140)
 
-        self.city = Entry(self.left, width = 30)
+        self.city = Entry(self.left, width = 30, bg = "ghost white")
         self.city.place(x = 210, y = 180)
 
-        self.street = Entry(self.left, width = 30)
+        self.street = Entry(self.left, width = 30, bg = "ghost white")
         self.street.place(x = 210, y = 220)
 
         # Submit Button
