@@ -6,4 +6,5 @@ Operations such as Add, Delete, Update and Search can be performed in each windo
 # Run main.py file  
 #It has buttons with images on it. Click on any available button and it will take you to a new window
 #corresponding to the button clicked. There we can perform the operations such as - 
-# Insert, Delete, Update and Search. 
+#Insert, Delete, Update and Search. The edit button provides the options to update and delete
+#You can only edit once you select the item displayed on the screen.
