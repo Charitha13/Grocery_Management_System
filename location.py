@@ -145,8 +145,7 @@ class Location():
             This function then provides us the option to update or delete"""
         try:
             if self.item_text:
-                self.llocation = Label(self.search_location, text ="Location_Id",
-                             font=('arial 10 bold'), fg = 'black')
+                self.llocation = Label(self.search_location, text ="Location_Id", font=('arial 10 bold'), fg = 'black')
                 self.llocation.place(x = 0, y = 450)
                 self.location2 = Entry(self.search_location, width = 30)
                 self.location2.place(x = 210, y = 450)
@@ -184,6 +183,7 @@ class Location():
 
     def onSelect(self,event):
         """This function is used to get the selected item from the displayed list"""
+
         for item in self.listBox.selection():
             self.item_text = self.listBox.item(item,"values")
 
@@ -227,9 +227,9 @@ class Location():
         self.right.destroy()
         self.__init__(self.window)
 
-#root = Tk()
-#root.title("Location Details")
-#b = Location(root)
-#root.geometry("1200x1200+0+0")
-#root.mainloop()
+# root = Tk()
+# root.title("Location Details")
+# b = Location(root)
+# root.geometry("1200x1200+0+0")
+# root.mainloop()
 

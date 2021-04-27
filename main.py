@@ -9,11 +9,14 @@ import Categories as cat
 import suppliers as suppl
 import manager as mg
 from PIL import ImageTk, Image
+import mysql.connector
+import tkinter.messagebox
 
 
 
 class mainWindow():
     def __init__(self, window1):
+
         self.window = window1
         self.window = Frame(self.window, width=2000, height=1600, bg="white")
         self.window.pack()
@@ -131,10 +134,58 @@ class mainWindow():
             self.__init__(root)
 
 
+def mainFun():
+    global root
+    if password == actual:
+        login.withdraw()
+        root = Toplevel()
+        root.title("Grocery Store Management")
+        mainWindow(root)
+        root.geometry("1600x1600+0+0")
+        root.mainloop()
+    else:
+        tkinter.messagebox.showinfo("Error", "Please enter correct password", parent = login)
+
+login = Tk()
+login.title("Login")
+login.geometry("400x400+0+0")
+
+conn = mysql.connector.connect(host="localhost", user="root", password="root", database="grocerystore")
+mycursor = conn.cursor()
+
+usernameLabel = Label(login, text = "Username")
+usernameLabel.place(x = 0, y = 0)
+usernameBox = Entry(login)
+usernameBox.place(x = 100, y = 0)
+
+passwordLabel = Label(login, text = "Password")
+passwordLabel.place(x = 0, y = 50)
+passwordBox = Entry(login, show = "*")
+passwordBox.place(x = 100, y = 50)
+username = ""
+password = ""
+actualPassword = ""
+
+def submit():
+    global username, password, actual
+    username = usernameBox.get()
+    password = passwordBox.get()
+    query = "SELECT Password from dbusers where Username = %s"
+    values = (username,)
+    mycursor.execute(query, values)
+    actualPassword = mycursor.fetchall()
+    try:
+        actual = actualPassword[0][0]
+        mainFun()
+    except:
+        tkinter.messagebox.showinfo("Error", "Invalid Username", parent = login)
 
 
-root = Tk()
-root.title("Grocery Store Management")
-obj = mainWindow(root)
-root.geometry("1600x1600+0+0")
-root.mainloop()
+
+submit_button = Button(login, text = "Login", command = submit)
+submit_button.place(x = 50, y = 100)
+login.mainloop()
+
+
+
+
