@@ -12,17 +12,56 @@ from PIL import ImageTk, Image
 import mysql.connector
 import tkinter.messagebox
 
-
+__copyright__ = "University of New Haven"
+__author__ = "Charitha Sree Jayaramireddy, Madhavi Kuchipudi, Ganesh Putta, Pranitha Challa, Monika Veerati"
 
 class mainWindow():
     def __init__(self, window1):
-
         self.window = window1
         self.window = Frame(self.window, width=2000, height=1600, bg="white")
         self.window.pack()
+        #Considering the image to be displayed as icon of our Store Title
         self.logo = Image.open('orange.png')
         self.logo = self.logo.resize((100, 100), Image.ANTIALIAS)
         self.logo1 = ImageTk.PhotoImage(self.logo)
+        # Initializing menu on the main screen
+        my_menu = Menu(root)
+        root.config(menu = my_menu)
+
+
+        text_aboutus1 = "Copyright - 2021, University of New Haven."
+        text_aboutus2 = "We, Team Datadive, as part of our Database course, has developed a Grocery Store Management System"
+        text_aboutus3 = "You can reach out to us through Emails provided in the Contact Us menu on the main screen."
+
+        #Creating multiple menus and their options
+        file_menu = Menu(my_menu, tearoff = 0)
+        my_menu.add_cascade(label="About us", menu = file_menu)
+        file_menu.add_command(label=text_aboutus1)
+        file_menu.add_command(label=text_aboutus2)
+        file_menu.add_command(label=text_aboutus3)
+
+
+        contact_menu = Menu(my_menu, tearoff = 0)
+        my_menu.add_cascade(label="Contact us", menu = contact_menu)
+        contact_menu.add_command(label="cjaya1@unh.newhaven.edu")
+        contact_menu.add_separator()
+        contact_menu.add_command(label="mkuch2@unh.newhaven.edu")
+        contact_menu.add_separator()
+        contact_menu.add_command(label="gputta1@unh.newhaven.edu")
+        contact_menu.add_separator()
+        contact_menu.add_command(label="pchal4@unh.newhaven.eduu")
+        contact_menu.add_separator()
+        contact_menu.add_command(label="mveer3@unh.newhaven.edu")
+
+        help_menu = Menu(my_menu, tearoff = 0)
+        my_menu.add_cascade(label="Help/Exit", menu = help_menu)
+
+        help_menu2 = Menu(help_menu, tearoff = 0)
+        # help_menu.add_command(label="Help")
+        help_menu.add_cascade(label = "Help", menu = help_menu2)
+        help_menu2.add_command(label="cjaya1@unh.newhaven.edu")
+        help_menu.add_command(label="Exit", command = root.destroy)
+
 
         # self.back_img = Image.open('image.png')
         # self.back_img = self.back_img.resize((1500, 1000), Image.ANTIALIAS)
@@ -31,13 +70,13 @@ class mainWindow():
         # self.background_label.pack(side = "top", fill ="both")
         # self.background_label.place(x=0, y=0, relwidth = 1, relheight = 1)
 
-
+        # Store Title displayed on the screen
         self.heading = Label(self.window, text="Orange Stores", font=('arial 60 bold italic'),image = self.logo1,compound = "left", fg='DarkOrange3', bg="white")
         self.heading.pack(side="top", fill = "both")
         self.heading.place(x=400, y=50)
 
 
-
+        #Images that are used on buttons
         self.image = Image.open('EEs3.png')
         self.image = self.image.resize((350, 210), Image.ANTIALIAS)
         self.EE_image = ImageTk.PhotoImage(self.image)
@@ -70,7 +109,7 @@ class mainWindow():
         self.mgr_img = self.mgr_img.resize((270, 210), Image.ANTIALIAS)
         self.mgr_img1 = ImageTk.PhotoImage(self.mgr_img)
 
-
+        #Buttons with images on the screen
         self.employees_button = Button(self.window, image = self.EE_image, compound = "center", width = 250, height = 200,font=('arial 15 bold'),bg = "MistyRose3",highlightbackground = "yellow", fg = 'RoyalBlue4', command = self. mainEmployees)
 
         self.employees_button.pack(side="top", fill = "both")
@@ -92,7 +131,7 @@ class mainWindow():
         self.manager_button = Button(self.window,  image = self.mgr_img1,compound = "center", width = 250, height = 200,font=('arial 15 bold'),bg = "MistyRose3",fg = 'RoyalBlue4', command = self.mainManager)
         self.manager_button.place(x = 1100, y = 550)
 
-
+    # Functions that will be called on a respective button click.
     def mainEmployees(self):
         ee.Employees(self.window)
         if ee.Employees(self.window).exit_now:
@@ -133,7 +172,7 @@ class mainWindow():
         if mg.Manager(self.window).exit_now:
             self.__init__(root)
 
-
+# Function that will get us into main screen, on a successful login
 def mainFun():
     global root
     if password == actual:
@@ -146,26 +185,31 @@ def mainFun():
     else:
         tkinter.messagebox.showinfo("Error", "Please enter correct password", parent = login)
 
+# Creating a login screen
 login = Tk()
 login.title("Login")
-login.geometry("400x400+0+0")
+login.geometry("300x200+0+0")
+login.configure(bg = "snow2")
 
+# Database connection - To access the username and password from a table
 conn = mysql.connector.connect(host="localhost", user="root", password="root", database="grocerystore")
 mycursor = conn.cursor()
 
-usernameLabel = Label(login, text = "Username")
-usernameLabel.place(x = 0, y = 0)
+# labels and text boxes displayed on the login screen
+usernameLabel = Label(login, text = "Username", bg = "snow2")
+usernameLabel.place(x = 0, y = 10)
 usernameBox = Entry(login)
-usernameBox.place(x = 100, y = 0)
+usernameBox.place(x = 100, y = 10)
 
-passwordLabel = Label(login, text = "Password")
-passwordLabel.place(x = 0, y = 50)
+passwordLabel = Label(login, text = "Password", bg = "snow2")
+passwordLabel.place(x = 0, y = 60)
 passwordBox = Entry(login, show = "*")
-passwordBox.place(x = 100, y = 50)
+passwordBox.place(x = 100, y = 60)
 username = ""
 password = ""
 actualPassword = ""
 
+# Function for login button on the login screen
 def submit():
     global username, password, actual
     username = usernameBox.get()
@@ -181,9 +225,9 @@ def submit():
         tkinter.messagebox.showinfo("Error", "Invalid Username", parent = login)
 
 
-
-submit_button = Button(login, text = "Login", command = submit)
-submit_button.place(x = 50, y = 100)
+#Placing the login button on the login screen
+submit_button = Button(login, text = "Login", width = 10, font = "Arial 10 bold",fg = "HotPink4", command = submit)
+submit_button.place(x = 90, y = 100)
 login.mainloop()
 
 

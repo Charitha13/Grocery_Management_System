@@ -3,9 +3,11 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import mysql.connector
 
+#Establishing a connection with database
 conn = mysql.connector.connect(host = "localhost", user = "root", password = "root", database = "grocerystore")
 mycursor = conn.cursor()
 class Manager:
+    """This class is to perform operations on the manager table of our database"""
     def __init__(self, window):
         self.window = window
         self.left = Frame(window, width = 2000, height = 1200, bg = "white")
@@ -43,6 +45,9 @@ class Manager:
         self.clear_now2 = Button(self.left, text ="Clear", width = 15, height = 2,font=('arial 10 bold'),bg = "light gray", command = self.clear2)
         self.clear_now2.place(x = 390, y = 200)
 
+        self.view_manager = Button(self.left, text ="Branch-Manager", width = 20, height = 2,font=('arial 10 bold'),bg = "light gray", command = self.viewManager)
+        self.view_manager.place(x = 550, y = 200)
+
 
 
     def searchNow(self):
@@ -71,7 +76,7 @@ class Manager:
             self.listBox.heading(col, text=col)
         for i, (EID, Mobile, Email) in enumerate(searchResult, start=1):
             self.listBox.insert("", "end", values=(i, EID, Mobile, Email))
-        self.listBox.place(x = 0, y = 200)
+        self.listBox.place(x = 0, y = 300)
         if searchResult:
             child_id = self.listBox.get_children()[-1]
             val1 = self.listBox.focus(child_id)
@@ -80,7 +85,7 @@ class Manager:
         if not searchResult:
             searchResult = "Manager not found"
             searched_label = Label(self.left, text = searchResult)
-            searched_label.place(x = 0, y = 160)
+            searched_label.place(x = 0, y = 260)
 
 
     def clear2(self):
@@ -88,6 +93,27 @@ class Manager:
         self.left.destroy()
         self.right.destroy()
         self.__init__(self.window)
+
+    def viewManager(self):
+        view_win = Tk()
+        view_win.geometry("1250x300")
+        # conn = mysql.connector.connect(host="localhost", user="root", password="root", database="grocerystore")
+        # mycursor = conn.cursor()
+        view_query = "SELECT * from Branch_Manager"
+        mycursor.execute(view_query)
+        view_result = mycursor.fetchall()
+
+        view_cols = ('Serial No', 'First Name', 'Last Name', 'Street', 'City', 'Zipcode')
+        self.listBox2 = ttk.Treeview(view_win, columns=view_cols, show = 'headings' )
+        # set column headings
+        for col in view_cols:
+            self.listBox2.heading(col, text=col)
+        for i, (First_Name, Last_Name, Street, City, Zipcode) in enumerate(view_result, start=1):
+            self.listBox2.insert("", "end", values=(i, First_Name, Last_Name, Street, City, Zipcode))
+
+        self.listBox2.place(x = 10, y = 50)
+
+        view_win.mainloop()
 
 # root = Tk()
 # root.title("Manager Details")

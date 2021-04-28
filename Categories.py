@@ -4,10 +4,11 @@ import mysql.connector
 from PIL import ImageTk, Image
 import tkinter.messagebox
 
-
+#Establishing a connection with database
 conn = mysql.connector.connect(host="localhost", user="root", password="root", database="grocerystore")
 mycursor = conn.cursor()
 class Categories():
+    """This class is to perform operations on the categories table of our database"""
     def __init__(self, window):
         self.window = window
         self.left = Frame(window, width=2000, height=1600, bg="white")
