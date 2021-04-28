@@ -1,8 +1,12 @@
+-- create database
+
+create database if not exists grocerystore;
+
+-- use database to start performing any operations on the database
+
 use grocerystore;
 
-/* create database grocerystore;
-
-use grocerystore;
+-- Creating tables Location, designation, employees
 
 create table location( Location_Id varchar(10) not null, Zipcode int not null, City varchar(20) not null, 
 Street varchar(30) not null, primary key (Location_Id));
@@ -22,7 +26,7 @@ First_Name varchar(40) not null, Last_Name varchar(30) not null,E_Id int not nul
 Dsgn_Id varchar(20) not null, primary key(E_Id), foreign key(Location_Id) references location(Location_Id),
 foreign key(Dsgn_Id) references designation(Dsgn_Id) );
 
-
+-- Inserting values into the tables location, employees, designation
 insert into employees values ("JTP01", "katjohn@gmail.com", "9875678987", "Katherine", "Johnson", 313100, "M01"),
   ("NHP02", "Marjason@gmail.com", "9865467435", "Mark", "Jason", 315178, "M01"),
   ("WGP03", "Rickstark@gmail.com", "9456789876", "Rick", "Stark", 314768, "M01");
@@ -82,14 +86,7 @@ insert into employees values("ATA09", "raczeen@gail.com", "9432187654", "Rachel"
 ("STN20", "ellhec@gmail.com", "5198760954","Elle", "Hecht", 327654, "M01"),
 ("WLP11", "katpage@gmail.com","5981297287", "Kathy", "Paget", 374867, "M01");
 
-select * from employees;
-select count(*) from employees;
-
-select * from designation;
-select count(*) from designation;
-
-select * from location;
-select count(*) from location;
+-- Creating tables customers, manager, dbusers, commodities, supplier , categories
 
 create table customers(Cust_ID int not null primary key, First_name varchar(20) not null,
 Last_name varchar(20) not null, Phone varchar(20) not null, Email varchar(30) not null,
@@ -102,7 +99,7 @@ insert into customers values(1,'Shane','Lane',5679345679,"shane.l@gmail.com","JT
  (5,'Billy','Ben',3459876908,"billy.b@gmail.com","NHP02");
 
 describe customers;
-select * from customers;
+
 
 create table Manager(E_Id int not null primary key, 
 Mobile varchar(15) not null, Email varchar(30) not null,
@@ -110,26 +107,15 @@ foreign key(E_Id) references employees(E_Id));
 
 insert into Manager(E_Id, Mobile, Email) select E_Id, Mobile, Email  from employees where  Dsgn_Id = "M01";
 
-select * from Manager;
-
 create table DBUsers(E_Id int not null primary key, Username varchar(20),
- Password varchar(20), foreign key(E_Id) references Manager(E_Id));
+ Password varchar(50), foreign key(E_Id) references Manager(E_Id)); 
  
+-- alter table DBUsers modify Password varchar(50);
  
- alter table DBUsers modify Password varchar(50);
- 
- insert into DBUsers(E_Id, Username, Password) select E_Id, substring(Email, 1, 6), SHA1(substring(E_Id, 1, 6)) from Manager;
-
--- select * from DBUsers;
-
---  delete from DBUsers limit 10;
-select * from DBUsers;
-select * from Manager;
-
+insert into DBUsers(E_Id, Username, Password) select E_Id, substring(Email, 1, 6), substring(E_Id, 1, 6) from Manager;
 
 create table Commodities( Product_No int not null primary key, 
 Product_Name varchar(30) not null, Prod_Quantity int not null, Prod_Price int not null);
-
 
 create table Suppliers(Supplier_No int NOT NULL Primary Key AUTO_INCREMENT,
  Supplier_Name varchar(20) NOT NULL,
@@ -140,6 +126,7 @@ create table Suppliers(Supplier_No int NOT NULL Primary Key AUTO_INCREMENT,
   foreign key(Location_Id) references location(Location_Id),
   Prd_Actual_Price decimal(10,2) NOT NULL);
 
+-- To check the structure of the table
 
 describe Commodities;
 describe Suppliers;
@@ -157,24 +144,37 @@ Insert into Suppliers values(1,'Panera',7654532879,"JTP01","panera@gmail.com",4,
 ( 5,'Fresh Foods',7689278041 ,"NHP02",  "freshf@gmail.com", 5,0.8 ),
 ( 6,'Linc',7687454092 ,"JTP01", "linc23@gmail.com" ,2 ,12 );
 
-select * from Commodities;
-select * from Suppliers;
  
  
+ create table Categories(Category_Id varchar(20) not null,
+ Category_Name varchar(30), Product_No int not null, foreign key(Product_No) references Commodities(Product_No)); 
  
- create table Categories(Category_Id varchar(20) not null primary key,
- Category_Name varchar(30), Product_No int not null, foreign key(Product_No) references Commodities(Product_No));
- 
- 
- alter table Categories drop primary key; 
+ -- alter table Categories drop primary key; 
  
  describe Categories;
+ 
   insert into Categories values("C1", "Pasta and more", 1),
  ("C1", "Pasta and more", 2),
  ("C2", "Meat products", 3),
  ("C3", "Bread", 4),
  ("C4", "Fruits and Salads", 5),
  ("C2", "Meat products", 6);
- */
- select * from Categories;
  
+-- Display all data in the tables employees, designation and location and also get the count of the records in each of the tables
+select * from employees;
+select count(*) from employees;
+
+select * from designation;
+select count(*) from designation;
+
+select * from location;
+select count(*) from location;
+
+select * from Commodities;
+select * from Suppliers;
+select * from Categories;
+select * from DBUsers;
+select * from Manager;
+select * from customers;
+ 
+
