@@ -177,4 +177,9 @@ select * from DBUsers;
 select * from Manager;
 select * from customers;
  
-
+-- Creating a view to display managers and their location
+create view Branch_Manager as select ee.First_Name, ee.Last_Name, loc.Street, loc.City, loc.Zipcode from employees
+ as ee inner join location as loc on ee.Dsgn_Id = "M01" and ee.Location_ID = loc.Location_Id;
+ 
+ -- Display the view
+ select * from Branch_Manager;
